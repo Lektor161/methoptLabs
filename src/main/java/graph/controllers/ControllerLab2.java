@@ -1,4 +1,4 @@
-package graph.controllers;
+package graphics.controllers;
 
 import javafx.application.Platform;
 import javafx.css.PseudoClass;
@@ -14,7 +14,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import linear.DiagMatrix;
+import linear.DiagonalMatrix;
 import linear.DoubleMatrix;
 import linear.DoubleVector;
 import methods.dimensional.poly.*;
@@ -44,51 +44,44 @@ public class ControllerLab2 implements Initializable {
     private LineChart<Number, Number> lineChart;
 
     @FXML
-    private Text sizeIterationsText;
-
-    @FXML
     private Text currentIterationText;
 
     @FXML
-    private VBox functionsButtons;
+    private Text sizeIterationsText;
 
     @FXML
     private VBox methodsButtons;
 
     @FXML
+    private VBox functionsButtons;
+
+    @FXML
     private ImageView FullScreenButton;
 
-    PseudoClass hiddenLevelLine = PseudoClass.getPseudoClass("hidden-level-line");
     PseudoClass nowSelected = PseudoClass.getPseudoClass("now-selected");
+    PseudoClass hiddenLevelLine = PseudoClass.getPseudoClass("hidden-level-line");
 
-    private List<AbstractGradientMethod.State> currentIterations;
     private XYChart.Series<Number, Number> currentSeries;
+    private List<AbstractGradientMethod.State> currentIterations;
     private int currentIteration = 0;
 
     private final List<XYChart.Series<Number, Number>> levels = new ArrayList<>();
     private final List<QuadraticForm> forms = new ArrayList<>(List.of(
             new QuadraticForm(
-                    new DiagMatrix(new DoubleVector(60d, 2d)),
-                    new DoubleVector(-10d, 10d), 2d),
+                    new DiagonalMatrix(new DoubleVector(2 * 77d, 10d)),
+                    new DoubleVector(-13d, 5d), 5d),
             new QuadraticForm(
-                    new DiagMatrix(new DoubleVector(1 * 2d, 64 * 2d)),
-                    new DoubleVector(-5d, 15d), 2d),
+                    new DiagonalMatrix(new DoubleVector(2 * 10d, 2 * 1d)),
+                    new DoubleVector(5d, 1d), 2d),
             new QuadraticForm(
-                    new DiagMatrix(new DoubleVector(51.3d * 2, 27.9d * 2)),
-                    new DoubleVector(-23.78d, -0.9d), -0.78d),
-            new QuadraticForm(
-                    new DoubleMatrix(new DoubleVector(254 * 2d, 506 / 2d),
-                            new DoubleVector(506 / 2d, 254 * 2d)),
-                    new DoubleVector(50d, 130d), -111d,
-                    new DoubleVector(1, 507)),
-            new QuadraticForm(
-                    new DiagMatrix(new DoubleVector(254 * 2d, 254 * 2d)),
-                    new DoubleVector(50d, 130d), -111d)
+                    new DiagonalMatrix(new DoubleVector(2 * 99d, 2 * 99d)),
+                    new DoubleVector(-95d, -9d), 91d)
     ));
     QuadraticForm form;
 
     @Override
     public void initialize(final URL location, final ResourceBundle resources) {
+
         FullScreenButton.setOnMouseClicked(event -> ((Stage) (((ImageView) event.getSource()).getScene().getWindow())).setFullScreen(true));
         ControllerLab1.initScene(Exit, slider, Menu, MenuClose, lineChart);
 
@@ -106,6 +99,7 @@ public class ControllerLab2 implements Initializable {
     }
 
     private void initializeLineChart(final GradientOptimizationMethod method) {
+
         lineChart.getData().clear();
         levels.clear();
         method.findMin();
@@ -121,6 +115,7 @@ public class ControllerLab2 implements Initializable {
         nextIteration(1);
     }
 
+
     private void updateCurrentSeries() {
         final AbstractGradientMethod.State currentInfo = currentIterations.get(currentIteration);
         final double x = currentInfo.getPoint().get(0);
@@ -128,6 +123,18 @@ public class ControllerLab2 implements Initializable {
         currentIterationText.setText(Integer.toString(currentIteration));
         addPoint(currentSeries, x, y);
     }
+
+
+    private void prevIteration(final int cnt) {
+        int i = cnt;
+        while (i-- > 0) {
+            if (currentIterations == null || currentIteration == 1) return;
+            currentIteration--;
+            currentSeries.getData().remove(currentIteration, currentSeries.getData().size());
+            updateCurrentSeries();
+        }
+    }
+
 
     private void nextIteration(final int cnt) {
         int i = cnt;
@@ -142,14 +149,9 @@ public class ControllerLab2 implements Initializable {
         }
     }
 
-    private void prevIteration(final int cnt) {
-        int i = cnt;
-        while (i-- > 0) {
-            if (currentIterations == null || currentIteration == 1) return;
-            currentIteration--;
-            currentSeries.getData().remove(currentIteration, currentSeries.getData().size());
-            updateCurrentSeries();
-        }
+    @FXML
+    private void nextIteration() {
+        nextIteration(1);
     }
 
     @FXML
@@ -158,8 +160,8 @@ public class ControllerLab2 implements Initializable {
     }
 
     @FXML
-    private void nextIteration() {
-        nextIteration(1);
+    private void prevIteration() {
+        prevIteration(1);
     }
 
     @FXML
@@ -167,14 +169,10 @@ public class ControllerLab2 implements Initializable {
         prevIteration(10);
     }
 
-    @FXML
-    private void prevIteration() {
-        prevIteration(1);
-    }
-
     private void addPoint(final XYChart.Series<Number, Number> series, final Number x, final Number y) {
         series.getData().add(new XYChart.Data<>(x, y));
     }
+
 
     private void getFunctionLevels() {
         final double maxR = 2;
@@ -218,11 +216,11 @@ public class ControllerLab2 implements Initializable {
         final double gradesPerStep = 1;
         for (double angle = 0; angle < Math.PI * 2; angle += Math.PI * 2 / 360 * gradesPerStep) {
             final DoubleVector normal = new DoubleVector(Math.cos(angle), Math.sin(angle));
-            final double a = 1 / 2d * form.getA().mulByVec(normal).scalar(normal);
-            final double b = form.getB().scalar(normal) + form.getA().mulByVec(center).scalar(normal);
+            final double a = 1 / 2d * form.getA().multiplyBy(normal).scalar(normal);
+            final double b = form.getB().scalar(normal) + form.getA().multiplyBy(center).scalar(normal);
             final double c = form.getC() - h
                     + center.scalar(form.getB())
-                    + 1 / 2d * (center.scalar(form.getA().mulByVec(center)));
+                    + 1 / 2d * (center.scalar(form.getA().multiplyBy(center)));
             final double r = (-b + Math.sqrt(b * b - 4 * a * c)) / (2 * a);
             final DoubleVector newPoint = normal.multiplyBy(r).add(center);
             series.getData().add(new XYChart.Data<>(newPoint.get(0), newPoint.get(1)));
@@ -231,8 +229,8 @@ public class ControllerLab2 implements Initializable {
     }
 
     @FXML
-    private void loadConjugate(final ActionEvent e) {
-        loadMethod(new ConjugateGradientMethod(form), e, 2);
+    private void loadGradient(final ActionEvent e) {
+        loadMethod(new GradientDescendMethod(form), e, 0);
     }
 
     @FXML
@@ -241,8 +239,8 @@ public class ControllerLab2 implements Initializable {
     }
 
     @FXML
-    private void loadGradient(final ActionEvent e) {
-        loadMethod(new GradientDescendMethod(form), e, 0);
+    private void loadConjugate(final ActionEvent e) {
+        loadMethod(new ConjugateGradientMethod(form), e, 2);
     }
 
     private void loadMethod(final GradientOptimizationMethod method, final ActionEvent e, final int n) {

@@ -16,13 +16,13 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="557.0" prefWidth="908.0" stylesheets="@../css/StyleLab2.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graph.controllers.ControllerLab1">
+<AnchorPane prefHeight="557.0" prefWidth="908.0" stylesheets="@../css/StyleLab2.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphics.controllers.ControllerLab1">
    <children>
       <BorderPane layoutX="114.0" layoutY="54.0" prefHeight="400.0" prefWidth="791.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
-            <AnchorPane prefHeight="65.0" prefWidth="200.0" style="-fx-background-color: #ff00c4;" BorderPane.alignment="CENTER">
+            <AnchorPane prefHeight="65.0" prefWidth="200.0" style="-fx-background-color: WHITE;" BorderPane.alignment="CENTER">
                <children>
-                  <StackPane alignment="TOP_RIGHT" nodeOrientation="LEFT_TO_RIGHT" prefHeight="26.0" style="-fx-background-color: #0a4969;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <StackPane alignment="TOP_RIGHT" nodeOrientation="LEFT_TO_RIGHT" prefHeight="26.0" style="-fx-background-color: #98FB98;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <ImageView fx:id="Exit" fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -94,7 +94,7 @@
             </AnchorPane>
          </top>
          <left>
-            <AnchorPane fx:id="slider" prefHeight="362.0" prefWidth="176.0" style="-fx-background-color: #0a4969;" BorderPane.alignment="CENTER">
+            <AnchorPane fx:id="slider" prefHeight="362.0" prefWidth="176.0" style="-fx-background-color: #98FB98;" BorderPane.alignment="CENTER">
                <children>
                   <VBox layoutX="14.0" layoutY="35.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="53.0">
                      <children>
@@ -205,8 +205,8 @@
                   </HBox>
                   <VBox alignment="CENTER" prefWidth="202.0" spacing="50.0">
                      <children>
-                        <JFXButton buttonType="RAISED" onAction="#setFunction1" ripplerFill="#0a4969" style="-fx-border-color: #0a4969;" text="x^2 + e^(-0.35*x) [-2, 3]" />
-                        <JFXButton buttonType="RAISED" layoutX="142.0" layoutY="281.0" onAction="#setFunction2" ripplerFill="#0a4969" style="-fx-border-color: #000000; -fx-border-radius: 4;" text="40x^5-12x^4+x^3+6x^2-90x [0, 1.5]" />
+                        <JFXButton buttonType="RAISED" onAction="#setFunction1" ripplerFill="#98FB98" style="-fx-border-color: #98FB98;" text="x^2 + e^(-0.35*x) [-2, 3]" />
+                        <JFXButton buttonType="RAISED" layoutX="142.0" layoutY="281.0" onAction="#setFunction2" ripplerFill="#98FB98" style="-fx-border-color: #000000; -fx-border-radius: 4;" text="40x^5-12x^4+x^3+6x^2-90x [0, 1.5]" />
                         <JFXButton layoutX="142.0" layoutY="342.0" onAction="#setFunction3" style="-fx-border-color: #000000; -fx-border-radius: 4;" text="x^3-x [0, 1]" />
                      </children>
                      <VBox.margin>

@@ -17,13 +17,13 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="557.0" prefWidth="908.0" stylesheets="@../css/StyleLab2.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graph.controllers.ControllerLab2">
+<AnchorPane prefHeight="557.0" prefWidth="908.0" stylesheets="@../css/StyleLab2.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphics.controllers.ControllerLab2">
     <children>
         <BorderPane layoutX="114.0" layoutY="54.0" prefHeight="400.0" prefWidth="791.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <top>
                 <AnchorPane prefHeight="65.0" prefWidth="200.0" style="-fx-background-color: WHITE;" BorderPane.alignment="CENTER">
                     <children>
-                        <StackPane alignment="CENTER_RIGHT" nodeOrientation="LEFT_TO_RIGHT" prefHeight="26.0" style="-fx-background-color: #0a4969;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <StackPane alignment="CENTER_RIGHT" nodeOrientation="LEFT_TO_RIGHT" prefHeight="26.0" style="-fx-background-color: #98FB98;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                             <children>
                                 <ImageView fx:id="Exit" fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
@@ -108,7 +108,7 @@
                 </AnchorPane>
             </top>
             <left>
-                <AnchorPane fx:id="slider" prefHeight="362.0" prefWidth="176.0" style="-fx-background-color: #0a4969;" BorderPane.alignment="CENTER">
+                <AnchorPane fx:id="slider" prefHeight="362.0" prefWidth="176.0" style="-fx-background-color: #98FB98;" BorderPane.alignment="CENTER">
                     <children>
                         <VBox fx:id="methodsButtons" layoutX="14.0" layoutY="35.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="53.0">
                             <children>
@@ -181,12 +181,10 @@
             <right>
                 <VBox fx:id="functionsButtons" alignment="CENTER" prefHeight="492.0" prefWidth="316.0" spacing="30.0" BorderPane.alignment="CENTER">
                 <children>
-                    <JFXButton buttonType="RAISED" onAction="#setFunction1" ripplerFill="#0a4969" styleClass="function-button" text="30x^2 + y^2  - 10x + 10 y + 2" />
-                    <JFXButton buttonType="RAISED" layoutX="1.0" layoutY="281.0" onAction="#setFunction2" ripplerFill="#0a4969" styleClass="function-button" text="x^2+64y^2-10x + 30y + 2" />
-                  <JFXButton buttonType="RAISED" layoutX="89.0" layoutY="243.0" onAction="#setFunction3" ripplerFill="#0a4969" styleClass="function-button" text="51.3x^2+27.9y^2-23.78x-0.9y-0.78" />
-                  <JFXButton buttonType="RAISED" layoutX="89.0" layoutY="328.0" onAction="#setFunction4" ripplerFill="#0a4969" styleClass="function-button" text="254𝑥^2 + 506𝑥y + 254y^2 + 50x + 130y − 111" />
-                  <JFXButton buttonType="RAISED" layoutX="35.0" layoutY="300.0" onAction="#setFunction5" ripplerFill="#0a4969" styleClass="function-button" text="254𝑥^2 + 254y^2 + 50x + 130y − 111" />
-                  <JFXButton buttonType="RAISED" onAction="#showOrHideLevels" ripplerFill="#0a4969" style="-fx-border-color: #000000; -fx-border-radius: 4;" text="Скрыть/Показать уровни" />
+                    <JFXButton buttonType="RAISED" onAction="#setFunction1" ripplerFill="#98FB98" styleClass="function-button" text="77x^2 + 5y^2  - 13x + 5y + 5" />
+                    <JFXButton buttonType="RAISED" layoutX="1.0" layoutY="281.0" onAction="#setFunction2" ripplerFill="#98FB98" styleClass="function-button" text="10x^2 + y^2 - 5x + y + 2" />
+                  <JFXButton buttonType="RAISED" layoutX="89.0" layoutY="243.0" onAction="#setFunction3" ripplerFill="#98FB98" styleClass="function-button" text="99x^2 + 99y^2 - 95x - 9y + 91" />
+                  <JFXButton buttonType="RAISED" onAction="#showOrHideLevels" ripplerFill="#98FB98" style="-fx-border-color: #000000; -fx-border-radius: 4;" text="Скрыть/Показать уровни" />
                 </children>
                 <VBox.margin>
                     <Insets />
