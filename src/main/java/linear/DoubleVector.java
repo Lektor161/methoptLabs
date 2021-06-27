@@ -70,6 +70,16 @@ public class DoubleVector {
         }
     }
 
+    public DoubleMatrix multiply(final DoubleVector vc) {
+        final double[][] data = new double[size()][vc.size()];
+        for (int i = 0; i < size(); i++) {
+            for (int j = 0; j < vc.size(); j++) {
+                data[i][j] = get(i) * vc.get(j);
+            }
+        }
+        return new DoubleMatrix(data);
+    }
+
     public double[] toArray() {
         return values;
     }

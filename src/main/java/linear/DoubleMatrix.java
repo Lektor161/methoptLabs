@@ -28,6 +28,18 @@ public class DoubleMatrix extends AbstractMatrix {
         );
     }
 
+    public DoubleMatrix(final double[][] data) {
+        n = data.length;
+        m = data[0].length;
+        if (Arrays.stream(data).anyMatch(Objects::isNull)) {
+            throw new IllegalArgumentException("Rows have null vectors.");
+        }
+        values = new ArrayList<>(Collections.nCopies(n, new DoubleVector(data[0].length)));
+        IntStream.range(0, n).forEach(
+                i -> values.set(i, new DoubleVector(data[i]))
+        );
+    }
+
     public DoubleMatrix(int n, int m) {
         this.n = n;
         this.m = m;
@@ -68,6 +80,23 @@ public class DoubleMatrix extends AbstractMatrix {
     @Override
     public String toString() {
         return Arrays.deepToString(values.toArray()).replace("],", String.format("],%n"));
+    }
+
+    public DoubleVector multiply(final DoubleVector vector) {
+        if (m != vector.size()) {
+            throw new IllegalArgumentException("Wide and height should be same.");
+        }
+        return new DoubleVector(values.stream().mapToDouble(v -> v.scalar(vector)).toArray());
+    }
+
+    public DoubleMatrix multilpy(final double k) {
+        final double[][] data = new double[n][n];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                data[i][j] = k * get(i, j);
+            }
+        }
+        return new DoubleMatrix(data);
     }
 
     public Stream<DoubleVector> stream() {

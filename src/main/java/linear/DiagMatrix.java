@@ -53,7 +53,7 @@ public class DiagMatrix extends AbstractMatrix {
         return v;
     }
 
-    public void set(final int i, final DoubleVector val) {
+    public void set() {
         throw new UnsupportedOperationException();
     }
 

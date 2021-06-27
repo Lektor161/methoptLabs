@@ -121,8 +121,6 @@ public abstract class AbstractMatrix implements Matrix {
         }
         return result;
     }
-
-
     @Override
     public String toString() {
         return IntStream.range(0, getN())
@@ -146,5 +144,17 @@ public abstract class AbstractMatrix implements Matrix {
             }
         }
         return true;
+    }
+    
+    public Matrix subtract(final Matrix other) {
+        final Matrix result = new DoubleMatrix(getN(), getM());
+
+        IntStream.range(0, getN()).forEach(row ->
+                IntStream.range(0, getN()).forEach(col ->
+                        result.set(row, col, get(row, col) - other.get(row, col))
+                )
+        );
+
+        return result;
     }
 }

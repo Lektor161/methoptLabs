@@ -102,7 +102,7 @@ public class ControllerLab1 implements Initializable {
         initializeLineChart();
     }
 
-    static void initScene(final ImageView Exit, final AnchorPane slider, final Label Menu, final Label MenuClose, final LineChart<?, ?> lineChart) {
+    public static void initScene(final ImageView Exit, final AnchorPane slider, final Label Menu, final Label MenuClose, final LineChart<?, ?> lineChart) {
         Exit.setOnMouseClicked(event -> System.exit(0));
         slider.setTranslateX(-176);
         Menu.setOnMouseClicked(e -> ControllerLab1.openMenu(slider, Menu, MenuClose));

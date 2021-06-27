@@ -9,6 +9,13 @@ public class Matrices {
 
     private Matrices() {
     }
+    public static DoubleMatrix E(final int n) {
+        final double[][] data = new double[n][n];
+        for (int i = 0; i < n; i++) {
+            data[i][i] = 1;
+        }
+        return new DoubleMatrix(data);
+    }
 
     public static boolean epsEquals(double a, double b) {
         return Math.abs(a - b) < EPS;
