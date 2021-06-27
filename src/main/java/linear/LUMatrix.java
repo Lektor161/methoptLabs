@@ -4,7 +4,7 @@ public class LUMatrix extends RegularMatrix implements LUDecomp {
 
     public LUMatrix(double[][] data) {
         super(data);
-        if (!checkMinors()) {
+        if (!checkMinors(data)) {
             throw new IllegalArgumentException("all minors can't be 0s");
         }
     }
@@ -44,7 +44,7 @@ public class LUMatrix extends RegularMatrix implements LUDecomp {
 
 
     // TODO: do it
-    private boolean checkMinors() {
+    private boolean checkMinors(double[][] matrix) {
         return true;
     }
 }
