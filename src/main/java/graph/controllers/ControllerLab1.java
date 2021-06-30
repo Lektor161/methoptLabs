@@ -25,17 +25,18 @@ import java.util.function.Function;
 import java.util.function.UnaryOperator;
 
 public class ControllerLab1 implements Initializable {
-    @FXML
-    private AnchorPane slider;
-
-    @FXML
-    private Label Menu;
 
     @FXML
     private ImageView Exit;
 
     @FXML
+    private Label Menu;
+
+    @FXML
     private Label MenuClose;
+
+    @FXML
+    private AnchorPane slider;
 
     @FXML
     private LineChart<Number, Number> lineChart;
@@ -47,10 +48,10 @@ public class ControllerLab1 implements Initializable {
     private Text rightBorderText;
 
     @FXML
-    private Text actualMinimumText;
+    private Text currentPointText;
 
     @FXML
-    private Text currentPointText;
+    private Text actualMinimumText;
 
     @FXML
     private Text currentIterationText;
@@ -58,7 +59,7 @@ public class ControllerLab1 implements Initializable {
     @FXML
     private Text sizeIterationsText;
 
-    private UnaryOperator<Double> function = x -> x * x + Math.exp(-0.35d * x);
+    private UnaryOperator<Double> function = x -> Math.pow(Math.E, 3 * x) + 5 * Math.pow(Math.E, -2 * x);
     private final UnaryOperator<Double> function1 = x -> x * x + Math.exp(-0.35d * x);
     private final UnaryOperator<Double> function2 = x -> 40 * x * x * x * x * x
             - 12 * x * x * x * x
@@ -68,17 +69,17 @@ public class ControllerLab1 implements Initializable {
     private final UnaryOperator<Double> function3 = x -> x * x * x - x;
     private final List<UnaryOperator<Double>> functions = List.of(function1, function2, function3);
 
-    private final double lF1 = -2d, rF1 = 3d, lF2 = 0, rF2 = 1.5d, lF3 = 0d, rF3 = 1d;
+    private final double lF1 = 0d, rF1 = 1d, lF2 = 0, rF2 = 1.5d, lF3 = 0d, rF3 = 1d;
     private final List<Double> intervals = List.of(lF1, rF1, lF2, rF2, lF3, rF3);
 
-    private final double actualMinimum1 = 0.1651701916490658914488911,
+    private final double actualMinimum1 = 0.24079456086518719852,
             actualMinimum2 = 0.856619, actualMinimum3 = 0.577350269189;
     private final List<Double> actualMinimums = List.of(actualMinimum1, actualMinimum2, actualMinimum3);
 
 
-    private double left = -2d;
-    private double right = 3d;
-    double ACTUAL_MINIMUM = 0.1651701916490658914488911;
+    private double left = 0d;
+    private double right = 1d;
+    double ACTUAL_MINIMUM = 0.24079456086518719852;
     private XYChart.Series<Number, Number> currentSeries;
     private List<AbstractOneDimensionalMethod.Info> currentIterations;
     private List<XYChart.Series<Number, Number>> bordersSeries;
@@ -86,23 +87,7 @@ public class ControllerLab1 implements Initializable {
     private int currentIteration = 0;
     private boolean drawParabolas = false;
 
-    @Override
-    public void initialize(final URL location, final ResourceBundle resources) {
-        initScene(Exit, slider, Menu, MenuClose, lineChart);
-        final boolean animations = false;
-
-        lineChart.setAnimated(animations);
-        lineChart.getXAxis().setAnimated(animations);
-        lineChart.getYAxis().setAnimated(animations);
-
-
-        lineChart.getXAxis().autoRangingProperty().setValue(true);
-        lineChart.getYAxis().autoRangingProperty().setValue(true);
-
-        initializeLineChart();
-    }
-
-    public static void initScene(final ImageView Exit, final AnchorPane slider, final Label Menu, final Label MenuClose, final LineChart<?, ?> lineChart) {
+    static void initScene(final ImageView Exit, final AnchorPane slider, final Label Menu, final Label MenuClose, final LineChart<?, ?> lineChart) {
         Exit.setOnMouseClicked(event -> System.exit(0));
         slider.setTranslateX(-176);
         Menu.setOnMouseClicked(e -> ControllerLab1.openMenu(slider, Menu, MenuClose));
@@ -126,6 +111,22 @@ public class ControllerLab1 implements Initializable {
         });
     }
 
+    @Override
+    public void initialize(final URL location, final ResourceBundle resources) {
+        initScene(Exit, slider, Menu, MenuClose, lineChart);
+        final boolean animations = false;
+
+        lineChart.setAnimated(animations);
+        lineChart.getXAxis().setAnimated(animations);
+        lineChart.getYAxis().setAnimated(animations);
+
+
+        lineChart.getXAxis().autoRangingProperty().setValue(true);
+        lineChart.getYAxis().autoRangingProperty().setValue(true);
+
+        initializeLineChart();
+    }
+
     private void initializeLineChart() {
         lineChart.getData().clear();
 
@@ -134,9 +135,9 @@ public class ControllerLab1 implements Initializable {
 
         final XYChart.Series<Number, Number> drawSeries = new XYChart.Series<>();
         getFunctionSeries(function, drawSeries);
-        drawSeries.setName("Исходная функция");
+        drawSeries.setName("e^(3*x) + 5*e^(-2*x)");
         lineChart.getData().add(drawSeries);
-        drawSeries.getNode().setStyle("-fx-stroke: peachpuff");
+        drawSeries.getNode().setStyle("-fx-stroke: #f9ff02");
         bordersSeries = new ArrayList<>();
         parabola = new XYChart.Series<>();
 
@@ -145,7 +146,7 @@ public class ControllerLab1 implements Initializable {
             lineChart.getData().add(border);
 
             bordersSeries.add(border);
-            border.getNode().setStyle("-fx-stroke: red");
+            border.getNode().setStyle("-fx-stroke: #44ff00");
             border.setName("");
         }
         currentSeries = new XYChart.Series<>();
@@ -153,7 +154,7 @@ public class ControllerLab1 implements Initializable {
 
         lineChart.getData().add(currentSeries);
         lineChart.getData().add(parabola);
-        parabola.getNode().setStyle("-fx-stroke-dash-array: 10px; -fx-stroke: cornflowerblue");
+        parabola.getNode().setStyle("-fx-stroke-dash-array: 10px; -fx-stroke: #050505");
     }
 
 
@@ -187,20 +188,14 @@ public class ControllerLab1 implements Initializable {
     }
 
     @FXML
-    private void loadParabolic() {
-        final DrawableMethod algorithm = new ParabolicMethod(function);
-        createDataSeriesFromDrawableOptimizationAlgorithm(algorithm, true);
+    private void loadDichotomy() {
+        final DrawableMethod algorithm = new DichotomyMethod(function);
+        createDataSeriesFromDrawableOptimizationAlgorithm(algorithm, false);
     }
 
     @FXML
     private void loadGoldenRatio() {
         final DrawableMethod algorithm = new GoldenRatioMethod(function);
-        createDataSeriesFromDrawableOptimizationAlgorithm(algorithm, false);
-    }
-
-    @FXML
-    private void loadDichotomy() {
-        final DrawableMethod algorithm = new DichotomyMethod(function);
         createDataSeriesFromDrawableOptimizationAlgorithm(algorithm, false);
     }
 
@@ -211,19 +206,15 @@ public class ControllerLab1 implements Initializable {
     }
 
     @FXML
-    private void loadBrent() {
-        final DrawableMethod algorithm = new BrentsMethod(function);
-        createDataSeriesFromDrawableOptimizationAlgorithm(algorithm, false);
+    private void loadParabolic() {
+        final DrawableMethod algorithm = new ParabolicMethod(function);
+        createDataSeriesFromDrawableOptimizationAlgorithm(algorithm, true);
     }
 
     @FXML
-    private void nextIteration() {
-        if (currentIterations == null) return;
-        if (currentIteration < currentIterations.size() - 1) {
-            currentIteration++;
-            currentIterationText.setText(Integer.toString(currentIteration));
-            updateCurrentSeries();
-        }
+    private void loadBrent() {
+        final DrawableMethod algorithm = new BrentsMethod(function);
+        createDataSeriesFromDrawableOptimizationAlgorithm(algorithm, false);
     }
 
     @FXML
@@ -231,8 +222,18 @@ public class ControllerLab1 implements Initializable {
         if (currentIterations == null || currentIteration == 0) return;
         currentIteration--;
         currentSeries.getData().remove(currentIteration, currentSeries.getData().size());
-        currentIterationText.setText(Integer.toString(currentIteration));
+        currentIterationText.setText(Integer.toString(currentIteration) + " /");
         updateCurrentSeries();
+    }
+
+    @FXML
+    private void nextIteration() {
+        if (currentIterations == null) return;
+        if (currentIteration < currentIterations.size() - 1) {
+            currentIteration++;
+            currentIterationText.setText(Integer.toString(currentIteration) + " /");
+            updateCurrentSeries();
+        }
     }
 
     private void addPoint(final XYChart.Series<Number, Number> series, final Number x, final Number y) {
@@ -256,17 +257,6 @@ public class ControllerLab1 implements Initializable {
         }
     }
 
-    private String getFormattedDouble(final double x) {
-        return String.format("%.9f", x);
-    }
-
-    private void refreshParabola() {
-        lineChart.getData().remove(4);
-        parabola = new XYChart.Series<>();
-        lineChart.getData().add(parabola);
-        parabola.getNode().setStyle("-fx-stroke-dash-array: 10px; -fx-stroke: cornflowerblue");
-    }
-
     private void createDataSeriesFromDrawableOptimizationAlgorithm(final DrawableMethod algorithm, final boolean drawParabolas) {
         clearChart();
         this.drawParabolas = drawParabolas;
@@ -277,6 +267,17 @@ public class ControllerLab1 implements Initializable {
         currentIterations = algorithm.getTable();
         sizeIterationsText.setText(Integer.toString(currentIterations.size() - 1));
         updateCurrentSeries();
+    }
+
+    private String getFormattedDouble(final double x) {
+        return String.format("%.9f", x);
+    }
+
+    private void refreshParabola() {
+        lineChart.getData().remove(4);
+        parabola = new XYChart.Series<>();
+        lineChart.getData().add(parabola);
+        parabola.getNode().setStyle("-fx-stroke-dash-array: 10px; -fx-stroke: #000000");
     }
 
     private void drawParabolaByThreePoints(final double x1, final double y1, final double x2, final double y2, final double x3, final double y3) {
@@ -298,6 +299,15 @@ public class ControllerLab1 implements Initializable {
         }
     }
 
+    private void changeFunction(int funcIndex) {
+        funcIndex--;
+        function = functions.get(funcIndex);
+        left = 0d;//intervals.get(2 * funcIndex);
+        right = 1d;//intervals.get(2 * funcIndex + 1);
+        ACTUAL_MINIMUM = actualMinimums.get(funcIndex);
+        initializeLineChart();
+    }
+
     @FXML
     private void setFunction1() {
         changeFunction(1);
@@ -311,15 +321,6 @@ public class ControllerLab1 implements Initializable {
     @FXML
     private void setFunction3() {
         changeFunction(3);
-    }
-
-    private void changeFunction(int funcIndex) {
-        funcIndex--;
-        function = functions.get(funcIndex);
-        left = intervals.get(2 * funcIndex);
-        right = intervals.get(2 * funcIndex + 1);
-        ACTUAL_MINIMUM = actualMinimums.get(funcIndex);
-        initializeLineChart();
     }
 
     static void openMenu(final AnchorPane slider, final Label Menu, final Label MenuClose) {
